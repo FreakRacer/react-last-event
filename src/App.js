@@ -1,19 +1,13 @@
-import Todo from "./components/Todo"
-import './styles/index.css'
-
+import Todo from "./components/Todo";
+import "./styles/index.css";
 
 function App() {
-
-
-    return (
-        <>
-        <div className="container">
-            <Todo/>
-        </div>
-        
-     
-        
-        </>
-    )
+  return (
+    <>
+      <div className="container">
+        <Todo />
+      </div>
+    </>
+  );
 }
-export default App
+export default App;
