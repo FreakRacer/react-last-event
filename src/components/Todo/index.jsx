@@ -5,7 +5,6 @@ function Todo() {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state);
 
-
   const deleted = (id) => {
     dispatch({
       type: "DELETE",
@@ -19,60 +18,61 @@ function Todo() {
     });
   };
 
-  const [holder, setHolder] = useState('');
+  const [holder, setHolder] = useState("");
 
-
-  const getValue = (e) =>{
-     setHolder(e.target.value)
-   
-  }
-  
+  const getValue = (e) => {
+    setHolder(e.target.value);
+  };
 
   const addTask = (e) => {
-    setHolder('');
+    setHolder("");
     e.preventDefault();
     let newItem = {
       text: holder,
-      completed: false
-    }
+      completed: false,
+    };
     dispatch({
       type: "ADDTASK",
       payload: newItem,
     });
   };
 
-
-   
-      
   return (
     <>
-    <header>
-      <h1>list: {todos.length}</h1>
-    </header>
-    <main>
-    <div className={todos ? "todos" : ""}>
-      {todos.map((todo, id) => {
-        return (
-          <div className="todo" key={id}>
+      <header>
+        <h1>list: {todos.length}</h1>
+      </header>
+      <main>
+        <div className={todos.length > 0 ? "todos" : ""}>
+          {todos.map((todo, id) => {
+            return (
+              <div className="todo" key={id}>
+                <input
+                  type="checkbox"
+                  defaultChecked={todo.completed}
+                  onClick={() => line(id)}
+                />
+                <p className={todo.completed ? "strike" : ""}>{todo.text}</p>
+                <button onClick={() => deleted(id)}>X</button>
+              </div>
+            );
+          })}
+        </div>
+        <div className="input">
+          <form>
             <input
-              type="checkbox"
-              defaultChecked={todo.completed}
-              onClick={() => line(id)}
+              type="text"
+              placeholder="add task..."
+              value={holder}
+              onChange={getValue}
             />
-            <p className={todo.completed ? "strike" : ""}>{todo.text}</p>
-            <button  onClick={() => deleted(id)}>X</button>
-          </div>
-        );
-      })}
-    </div>
-    <div className="input">
-      <form   > 
-        <input type="text" placeholder="add task..." value={holder} onChange={getValue}/>
-        {/* <button type="button" onClick={addTask}>add</button> */}
-        <div className="btn" type="button" onClick={addTask}>add</div>
-      </form>
-    </div>
-    </main>
+            {/* <button type="button" onClick={addTask}>add</button> */}
+            <div className="btn" type="button" onClick={addTask}>
+              add
+            </div>
+          </form>
+        </div>
+      </main>
     </>
   );
 }
